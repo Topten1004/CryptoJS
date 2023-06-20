@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System;
 using System.Security.Cryptography;
+using API.ViewModels;
+using API.Models;
 
 namespace API.Controllers
 {
@@ -10,21 +12,35 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
+        private readonly ApplicationDBContext _context;
 
-        public UserController(ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, ApplicationDBContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult UserLogin([FromBody] UserLogin login)
+        public async Task<IActionResult> UserLoginAsync([FromBody] UserLogin login)
         {
-
-            string password = DecryptStringAES(login.Password);
-
-            if (login.UserId != null && password != null)
+            if (!_context.Users.Any())
             {
+                UserModel user = new UserModel();
+                user.UserName = "David" + "Ray";
+                user.Password = login.Password;
+                user.UserId = login.UserId;
+                user.Lastmodifieddate = DateTime.UtcNow;
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+
+            var result = _context.Users.Where( x => x.Password  == login.Password ).FirstOrDefault();
+
+            if (result != null)
+            {
+                string password = DecryptStringAES(login.Password);
                 return Ok(password);
             }
             else

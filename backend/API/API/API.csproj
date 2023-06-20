@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="crypto-js.TypeScript.DefinitelyTyped" Version="0.6.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.7" />
     <PackageReference Include="nClam" Version="7.0.0" />
     <PackageReference Include="nClam.Net" Version="0.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

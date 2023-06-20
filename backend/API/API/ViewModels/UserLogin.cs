@@ -1,4 +1,4 @@
-namespace API
+namespace API.ViewModels
 {
     public class UserLogin
     {

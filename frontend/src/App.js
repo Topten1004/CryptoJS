@@ -3,10 +3,18 @@ import './App.css';
 import axios from 'axios'
 import React, { useState } from 'react';
 import CryptoJS from 'crypto-js';
+import Button from '@mui/material/Button';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const App = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
+  const [flag, setFlag] = useState(false);
+
+  const handleClose = () => {
+    setFlag(false);
+  }
 
   const handleLogin = async () => {
     
@@ -34,7 +42,7 @@ const App = () => {
       });
 
       // Handle successful login
-      alert("Success");
+      setFlag(true);
     } catch (error) {
       // Handle login error
       console.error(error);
@@ -47,6 +55,13 @@ const App = () => {
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userId">
             User ID
           </label>
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={flag}
+            onClose={handleClose}
+          >
+            <Alert severity="info">This is an information message!</Alert>
+          </Snackbar>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="userId"
