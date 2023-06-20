@@ -40,8 +40,23 @@ namespace API.Controllers
 
             if (result != null)
             {
+                TimeSpan duration = DateTime.UtcNow- result.Lastmodifieddate;
+                int numberOfDays = duration.Days;
+
+                LoginResponse response = new LoginResponse();
+
+                if (numberOfDays > 85)
+                {
+                    response.message = "Password need update";
+                    response.status = 1;
+                }
+
+                response.status = 0;
+                response.message = "Login success";
+
                 string password = DecryptStringAES(login.Password);
-                return Ok(password);
+
+                return Ok(response);
             }
             else
             {

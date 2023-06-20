@@ -42,9 +42,17 @@ const App = () => {
       });
 
       // Handle successful login
-      setFlag(true);
+      console.log("response: ", response);
+
+      if(response.data.status === 1)
+      {
+        setFlag(true);
+      }
+      alert(response.data.message);
+
     } catch (error) {
       // Handle login error
+      alert("Can't login");
       console.error(error);
     }
   };
@@ -60,7 +68,7 @@ const App = () => {
             open={flag}
             onClose={handleClose}
           >
-            <Alert severity="info">This is an information message!</Alert>
+            <Alert severity="error">This is an information message!</Alert>
           </Snackbar>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
