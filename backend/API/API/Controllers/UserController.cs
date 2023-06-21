@@ -13,7 +13,7 @@ namespace API.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly ApplicationDBContext _context;
-
+        public int MaxDays = 5;
         public UserController(ILogger<UserController> logger, ApplicationDBContext context)
         {
             _logger = logger;
@@ -45,7 +45,7 @@ namespace API.Controllers
 
                 LoginResponse response = new LoginResponse();
 
-                if (numberOfDays > 85)
+                if (numberOfDays > (90 - MaxDays))
                 {
                     response.message = "Password need update";
                     response.status = 1;
